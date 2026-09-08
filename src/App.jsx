@@ -4,6 +4,29 @@ import "./App.css";
 function App() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [settingsSaved, setSettingsSaved] = useState(false);
+  const [settings, setSettings] = useState(() => {
+  try {
+    const savedSettings = localStorage.getItem(
+      "dashboard-settings"
+    );
+
+    if (savedSettings) {
+      return JSON.parse(savedSettings);
+    }
+  } catch (error) {
+    console.error("Could not load settings:", error);
+  }
+
+  return {
+    name: "John Anderson",
+    email: "john@example.com",
+    company: "Acme Inc.",
+    emailNotifications: true,
+    weeklyReports: true,
+    productUpdates: false,
+  };
+});
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [dashboardPeriod, setDashboardPeriod] = useState("Last 30 Days");
